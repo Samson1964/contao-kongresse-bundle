@@ -1,0 +1,37 @@
+{
+    "name": "schachbulle/contao-kongresse-bundle",
+    "type": "contao-bundle",
+    "description": "Kongresse und Hauptausschüsse für Contao 4",
+    "license": "LGPL-3.0-or-later",
+    "authors": [
+        {
+            "name": "Frank Hoppe",
+            "homepage": "https://www.schachbulle.de/"
+        }
+    ],
+    "require": {
+        "php": "^5.6 || ^7.0",
+        "contao/core-bundle": "^4",
+        "menatwork/contao-multicolumnwizard-bundle": "^3.4"
+    },
+    "conflict": {
+        "contao/core": "*",
+        "contao/manager-plugin": "<2.0 || >=3.0"
+    },
+    "require-dev": {
+        "contao/manager-plugin": "^2.0",
+        "doctrine/doctrine-cache-bundle": "^1.3"
+    },
+    "extra": {
+        "contao-manager-plugin": "Schachbulle\\ContaoKongresseBundle\\ContaoManager\\Plugin"
+    },
+    "autoload": {
+        "psr-4": {
+            "Schachbulle\\ContaoKongresseBundle\\": "src/"
+        }
+    },
+    "support": {
+        "issues": "https://github.com/Samson1964/contao-kongresse-bundle/issues",
+        "source": "https://github.com/Samson1964/contao-kongresse-bundle"
+    }
+}
