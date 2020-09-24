@@ -2,6 +2,26 @@
 
 <?php $this->block('content'); ?>
 
-content
+<?php if($this->records): ?>
+<table class="ce_table">
+	<tr>
+		<th class="jahr">Jahr</th>
+		<th class="ort">Ort</th>
+		<th class="datum">Datum</th>
+		<th class="info">Bemerkungen</th>
+		<th class="links">Links</th>
+	</tr>
+	<?php foreach($this->records as $item): ?>
+		<?php $class = $class == 'odd' ? 'even' : 'odd'; ?>
+		<tr class="<?= $class ?>">
+			<td><?= $item['jahr'] ?></td>
+			<td><?= $item['ort'] ?></td>
+			<td><?= $item['datum'] ?></td>
+			<td><?= $item['info'] ?></td>
+			<td><?= $item['links'] ?></td>
+		</tr>
+	<?php endforeach; ?>
+</table>
+<?php endif; ?>
 
 <?php $this->endblock(); ?>

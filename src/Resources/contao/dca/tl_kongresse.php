@@ -15,7 +15,8 @@ $GLOBALS['TL_DCA']['tl_kongresse'] = array
 		(
 			'keys' => array
 			(
-				'id' => 'primary'
+				'id'   => 'primary',
+				'jahr' => 'index'
 			)
 		),
 	),
@@ -33,7 +34,7 @@ $GLOBALS['TL_DCA']['tl_kongresse'] = array
 		'label' => array
 		(
 			// Das Feld aktiv wird vom label_callback überschrieben
-			'fields'                  => array('aktiv','id','nachname','vorname','firma','plz','ort'),
+			'fields'                  => array('jahr','ort','datum','typ'),
 			'showColumns'             => true,
 			'format'                  => '%s',
 		),
@@ -87,7 +88,7 @@ $GLOBALS['TL_DCA']['tl_kongresse'] = array
 	// Paletten
 	'palettes' => array
 	(
-		'default'                     => '{kongresse_legende};{aktiv_legende},aktiv;{alias_legende},alias'
+		'default'                     => '{congress_legend},typ,jahr,ort,datum,info;{files_legend},file_broschuere,file_protokoll,url;{extra_legend},extra_links;{aktiv_legend},aktiv'
 	),
 
 	// Felder
@@ -105,6 +106,20 @@ $GLOBALS['TL_DCA']['tl_kongresse'] = array
 			'label'                   => &$GLOBALS['TL_LANG']['tl_kongresse']['tstamp'],
 			'sql'                     => "int(10) unsigned NOT NULL default '0'"
 		),
+		'typ' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_kongresse']['typ'],
+			'exclude'                 => true,
+			'inputType'               => 'select',
+			'options'                 => &$GLOBALS['TL_LANG']['tl_kongresse']['typen'],
+			'eval'                    => array
+			(
+				'multiple'            => false, 
+				'tl_class'            => 'w50',
+				'includeBlankOption'  => true
+			),
+			'sql'                     => "varchar(2) NOT NULL default ''"
+		),
 		'jahr' => array
 		(
 			'label'                   => &$GLOBALS['TL_LANG']['tl_kongresse']['jahr'],
@@ -114,7 +129,7 @@ $GLOBALS['TL_DCA']['tl_kongresse'] = array
 			'flag'                    => 1,
 			'filter'                  => true,
 			'search'                  => true,
-			'eval'                    => array('mandatory'=>true, 'maxlength'=>4, 'tl_class'=>'w50'),
+			'eval'                    => array('mandatory'=>true, 'maxlength'=>4, 'tl_class'=>'w50 clr'),
 			'sql'                     => "varchar(4) NOT NULL default ''"
 		),
 		'ort' => array
@@ -133,6 +148,7 @@ $GLOBALS['TL_DCA']['tl_kongresse'] = array
 			'label'                   => &$GLOBALS['TL_LANG']['tl_kongresse']['datum'],
 			'exclude'                 => true,
 			'inputType'               => 'text',
+			'flag'                    => 5,
 			'eval'                    => array('rgxp'=>'date', 'datepicker'=>true, 'tl_class'=>'w50 wizard'),
 			'sql'                     => "varchar(11) NOT NULL default ''"
 		), 
@@ -144,8 +160,99 @@ $GLOBALS['TL_DCA']['tl_kongresse'] = array
 			'sorting'                 => true,
 			'flag'                    => 1,
 			'search'                  => false,
-			'eval'                    => array('mandatory'=>false, 'maxlength'=>255, 'tl_class'=>'w50 clr'),
+			'eval'                    => array('mandatory'=>false, 'maxlength'=>255, 'tl_class'=>'long clr'),
 			'sql'                     => "varchar(255) NOT NULL default ''"
+		),
+		'file_broschuere' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_kongresse']['file_broschuere'],
+			'exclude'                 => true,
+			'inputType'               => 'fileTree',
+			'eval'                    => array
+			(
+				'filesOnly'           => true, 
+				'fieldType'           => 'radio', 
+				'mandatory'           => false, 
+				'tl_class'            => 'w50'
+			),
+			'sql'                     => "binary(16) NULL"
+		),
+		'file_protokoll' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_kongresse']['file_protokoll'],
+			'exclude'                 => true,
+			'inputType'               => 'fileTree',
+			'eval'                    => array
+			(
+				'filesOnly'           => true, 
+				'fieldType'           => 'radio', 
+				'mandatory'           => false, 
+				'tl_class'            => 'w50'
+			),
+			'sql'                     => "binary(16) NULL"
+		),
+		'url' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_kongresse']['url'],
+			'exclude'                 => true,
+			'search'                  => true,
+			'inputType'               => 'text',
+			'eval'                    => array
+			(
+				'mandatory'           => false, 
+				'rgxp'                => 'url', 
+				'decodeEntities'      => true, 
+				'maxlength'           => 255, 
+				'dcaPicker'           => true, 
+				'addWizardClass'      => false, 
+				'tl_class'            => 'w50'
+			),
+			'sql'                     => "varchar(255) NOT NULL default ''"
+		),
+		'extra_links' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_kongresse']['url'],
+			'exclude'                 => true,
+			'inputType'               => 'multiColumnWizard',
+			'eval'                    => array
+			(
+				'tl_class'            => 'long clr',
+				'buttonPos'           => 'middle',
+				'buttons'             => array
+				(
+					'copy'            => 'system/themes/flexible/icons/copy.svg',
+					'delete'          => 'system/themes/flexible/icons/delete.svg',
+					'move'            => true,
+					'up'              => true,
+					'down'            => true
+				),
+				'columnFields'        => array
+				(
+					'url' => array
+					(
+						'label'                   => &$GLOBALS['TL_LANG']['tl_kongresse']['extra_links_url'],
+						'exclude'                 => true,
+						'search'                  => true,
+						'inputType'               => 'text',
+						'eval'                    => array
+						(
+							'mandatory'           => false, 
+							'rgxp'                => 'url', 
+							'decodeEntities'      => true, 
+							'maxlength'           => 255, 
+							'dcaPicker'           => true, 
+							'addWizardClass'      => false, 
+						),
+					),
+					'text' => array
+					(
+						'label'                   => &$GLOBALS['TL_LANG']['tl_kongresse']['extra_links_text'],
+						'exclude'                 => true,
+						'inputType'               => 'text',
+					),
+				)
+			),
+			'sql'                     => "blob NULL"
 		),
 		'aktiv' => array
 		(
@@ -165,140 +272,59 @@ $GLOBALS['TL_DCA']['tl_kongresse'] = array
  */
 class tl_kongresse extends Backend
 {
-    /**
-     * Add an image to each record
-     * @param array
-     * @param string
-     * @param DataContainer
-     * @param array
-     * @return string
-     */
-	public function addIcon($row, $label, DataContainer $dc, $args)
+
+	public function toggleIcon($row, $href, $label, $title, $icon, $attributes)
 	{
-		// Anzahl Einbindungen feststellen und Singular/Plural zuweisen
-		$seiten = count(explode("\n",$row['links']))-1;
-		($seiten == 1) ? ($wort = 'Seite') : ($wort = 'Seiten');
-
-		if($row['aktiv'] && $row['links'])
+		$this->import('BackendUser', 'User');
+		
+		if (strlen($this->Input->get('tid')))
 		{
-			// Adresse aktiv, ein oder mehrere Einbindungen
-			$icon = 'bundles/contaoadressen/images/gruen.png';
-			$title = 'Adresse eingebunden auf '.$seiten.' '.$wort;
+			$this->toggleVisibility($this->Input->get('tid'), ($this->Input->get('state') == 0));
+			$this->redirect($this->getReferer());
 		}
-		elseif($row['aktiv'])
+		
+		// Check permissions AFTER checking the tid, so hacking attempts are logged
+		if (!$this->User->isAdmin && !$this->User->hasAccess('tl_kongresse::aktiv', 'alexf'))
 		{
-			// Adresse aktiv, keine Einbindungen
-			$icon = 'bundles/contaoadressen/images/gelb.png';
-			$title = 'Adresse aktiv, aber nicht eingebunden';
+			return '';
 		}
-		elseif($row['links'])
+		
+		$href .= '&amp;id='.$this->Input->get('id').'&amp;tid='.$row['id'].'&amp;state='.$row[''];
+		
+		if (!$row['aktiv'])
 		{
-			// Adresse nicht aktiv, ein oder mehrere Einbindungen
-			$icon = 'bundles/contaoadressen/images/gelb.png';
-			$title = 'Adresse nicht aktiv, aber auf '.$seiten.' '.$wort.' eingebunden';
+			$icon = 'invisible.gif';
 		}
-		else
-		{
-			// Adresse nicht aktiv, keine Einbindungen
-			$icon = 'bundles/contaoadressen/images/rot.png';
-			$title = 'Adresse nicht aktiv und nicht eingebunden';
-		}
-
-		// Spalte 0 (aktiv) in Ausgabe überschreiben
-		$args[0] = '<span href="" title="'.$title.'">'.Image::getHtml($icon,'').'</span>';
-
-		// Modifizierte Zeile zurückgeben
-		return $args;
-
+		
+		return '<a href="'.$this->addToUrl($href).'" title="'.specialchars($title).'"'.$attributes.'>'.$this->generateImage($icon, $label).'</a> ';
 	}
 
-	/**
-	 * Generiert automatisch ein Alias aus Vorname und Nachname
-	 * @param mixed
-	 * @param \DataContainer
-	 * @return string
-	 * @throws \Exception
-	 */
-	public function generateAlias($varValue, DataContainer $dc)
+
+	public function toggleVisibility($intId, $blnPublished)
 	{
-		$autoAlias = false;
-
-		// Generate alias if there is none
-		if ($varValue == '')
+		// Check permissions to publish
+		if (!$this->User->isAdmin && !$this->User->hasAccess('tl_kongresse::aktiv', 'alexf'))
 		{
-			$autoAlias = true;
-			$varValue = standardize(\StringUtil::restoreBasicEntities($dc->activeRecord->nachname.'-'.$dc->activeRecord->vorname));
+			$this->log('Not enough permissions to show/hide record ID "'.$intId.'"', 'tl_kongresse toggleVisibility', TL_ERROR);
+			$this->redirect('contao/main.php?act=error');
 		}
-
-		$objAlias = $this->Database->prepare("SELECT id FROM tl_kongresse WHERE alias=?")
-								   ->execute($varValue);
-
-		// Check whether the news alias exists
-		if ($objAlias->numRows > 1 && !$autoAlias)
+		
+		$this->createInitialVersion('tl_kongresse', $intId);
+		
+		// Trigger the save_callback
+		if (is_array($GLOBALS['TL_DCA']['tl_kongresse']['fields']['aktiv']['save_callback']))
 		{
-			throw new Exception(sprintf($GLOBALS['TL_LANG']['ERR']['aliasExists'], $varValue));
+			foreach ($GLOBALS['TL_DCA']['tl_kongresse']['fields']['aktiv']['save_callback'] as $callback)
+			{
+				$this->import($callback[0]);
+				$blnPublished = $this->$callback[0]->$callback[1]($blnPublished, $this);
+			}
 		}
-
-		// Add ID to alias
-		if ($objAlias->numRows && $autoAlias)
-		{
-			$varValue .= '-' . $dc->id;
-		}
-
-		return $varValue;
-	} 
-
-	/**
-	 * Return the link picker wizard
-	 * @param \DataContainer
-	 * @return string
-	 */
-	public function pagePicker(DataContainer $dc)
-	{
-		return ' <a href="contao/page.php?do='.Input::get('do').'&amp;table='.$dc->table.'&amp;field='.$dc->field.'&amp;value='.str_replace(array('{{link_url::', '}}'), '', $dc->value).'" onclick="Backend.getScrollOffset();Backend.openModalSelector({\'width\':768,\'title\':\''.specialchars(str_replace("'", "\\'", $GLOBALS['TL_LANG']['MOD']['page'][0])).'\',\'url\':this.href,\'id\':\''.$dc->field.'\',\'tag\':\'ctrl_'.$dc->field . ((Input::get('act') == 'editAll') ? '_' . $dc->id : '').'\',\'self\':this});return false">' . Image::getHtml('pickpage.gif', $GLOBALS['TL_LANG']['MSC']['pagepicker'], 'style="vertical-align:top;cursor:pointer"') . '</a>';
+		
+		// Update the database
+		$this->Database->prepare("UPDATE tl_kongresse SET tstamp=". time() .", aktiv='" . ($blnPublished ? '' : '1') . "' WHERE id=?")
+		     ->execute($intId);
+		$this->createNewVersion('tl_kongresse', $intId);
 	}
-
-	/**
-	 * Trägt die Metdaten in "alt" und "caption" ein, wenn das Bild gewechselt wird und die Metafelder leer sind
-	 *
-	 * @param mixed         $varValue
-	 * @param DataContainer $dc
-	 *
-	 * @return mixed
-	 */
-	public function storeFileMetaInformation($varValue, DataContainer $dc)
-	{
-		if ($dc->activeRecord->singleSRC != $varValue)
-		{
-			$objFile = \FilesModel::findByUuid($varValue);
-			if ($objFile === null)
-			{
-				return $varValue;
-			}
-
-			$arrMeta = deserialize($objFile->meta);
-			if (empty($arrMeta))
-			{
-				return $varValue;
-			}
-
-			$strLanguage = 'de';
-			if (isset($arrMeta[$strLanguage]))
-			{
-				if (\Input::post('alt') == '' && !empty($arrMeta[$strLanguage]['title']))
-				{
-					\Input::setPost('alt', $arrMeta[$strLanguage]['title']);
-				}
-
-				if (\Input::post('caption') == '' && !empty($arrMeta[$strLanguage]['caption']))
-				{
-					\Input::setPost('caption', $arrMeta[$strLanguage]['caption']);
-				}
-			}
-
-		}
-
-		return $varValue;
-	} 
 
 }

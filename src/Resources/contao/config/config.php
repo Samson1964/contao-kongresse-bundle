@@ -7,8 +7,7 @@ $GLOBALS["BE_MOD"]["content"]["kongresse"] = array(
 /**
  * Frontend-Module
  */
-//$GLOBALS['FE_MOD']['adressen'] = array
-//(
-//	'wertungsreferenten' => 'Schachbulle\ContaoAdressenBundle\Classes\Wertungsreferenten',
-//	'adressensuche'      => 'Schachbulle\ContaoAdressenBundle\Classes\Suche',
-//);  
+$GLOBALS['FE_MOD']['application'] = array
+(
+	'kongresse'          => 'Schachbulle\ContaoKongresseBundle\Modules\Kongresse'
+);  
