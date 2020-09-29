@@ -23,5 +23,6 @@ $GLOBALS['TL_LANG']['tl_module']['kongresse_typen'] = array
 (
 	'oK' => 'Ordentliche Kongresse',
 	'aK' => 'Außerordentliche Kongresse',
-	'Ha' => 'Hauptausschüsse'
+	'Ha' => 'Hauptausschüsse',
+	'Ko' => 'Kommissionstagungen'
 );

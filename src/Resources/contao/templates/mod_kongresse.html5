@@ -9,16 +9,20 @@
 		<th class="ort">Ort</th>
 		<th class="datum">Datum</th>
 		<th class="info">Bemerkungen</th>
+		<th class="buch" title="Buch/Broschüre">B</th>
+		<th class="protokoll" title="Protokoll">P</th>
 		<th class="links">Links</th>
 	</tr>
 	<?php foreach($this->records as $item): ?>
 		<?php $class = $class == 'odd' ? 'even' : 'odd'; ?>
 		<tr class="<?= $class ?>">
-			<td><?= $item['jahr'] ?></td>
-			<td><?= $item['ort'] ?></td>
-			<td><?= $item['datum'] ?></td>
-			<td><?= $item['info'] ?></td>
-			<td><?= $item['links'] ?></td>
+			<td class="jahr"><?= $item['jahr'] ?></td>
+			<td class="ort"><?= $item['ort'] ?></td>
+			<td class="datum"><?= $item['datum'] ?></td>
+			<td class="info"><?= $item['info'] ?></td>
+			<td class="buch"><?= $item['broschuere'] ?></td>
+			<td class="protokoll"><?= $item['protokoll'] ?></td>
+			<td class="links"><?= $item['links'] ?></td>
 		</tr>
 	<?php endforeach; ?>
 </table>
