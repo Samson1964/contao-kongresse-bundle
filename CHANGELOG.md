@@ -1,5 +1,13 @@
 # Kongresse und Hauptausschüsse Changelog
 
+## Version 1.1.1 (2020-09-29)
+
+* Fix: application-Array wurde überschrieben
+* Backend: Nach Jahr abwärts sortieren
+* Frontend: Icons größer - 24 statt 16
+* Frontend: title-Attribut bei den Icons ergänzt
+* FE-Modul: Übersetzung in Modulauswahl fehlte
+
 ## Version 1.1.0 (2020-09-29)
 
 * Add: TODO.md

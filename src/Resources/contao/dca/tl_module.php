@@ -37,13 +37,12 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['kongresse_typ'] = array
 	'label'                   => &$GLOBALS['TL_LANG']['tl_module']['kongresse_typ'],
 	'exclude'                 => true,
 	'filter'                  => true,
-	'inputType'               => 'checkboxWizard',
+	'inputType'               => 'checkbox',
 	'options'                 => &$GLOBALS['TL_LANG']['tl_module']['kongresse_typen'],
 	'eval'                    => array
 	(
 		'mandatory'           => true,
-		'includeBlankOption'  => false,
-		'chosen'              => true,
+		'includeBlankOption'  => true,
 		'multiple'            => true,
 		'tl_class'            => 'long clr'
 	),

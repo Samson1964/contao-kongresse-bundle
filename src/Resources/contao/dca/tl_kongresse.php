@@ -125,7 +125,7 @@ $GLOBALS['TL_DCA']['tl_kongresse'] = array
 			'inputType'               => 'text',
 			'exclude'                 => true,
 			'sorting'                 => true,
-			'flag'                    => 1,
+			'flag'                    => 12,
 			'filter'                  => true,
 			'search'                  => true,
 			'eval'                    => array('mandatory'=>true, 'maxlength'=>4, 'tl_class'=>'w50 clr'),

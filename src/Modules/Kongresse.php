@@ -50,10 +50,18 @@ class Kongresse extends \Module
 		// Gewünschte Datensätze
 		$vonJahr = $this->kongresse_from ? $this->kongresse_from : 1800;
 		$bisJahr = $this->kongresse_to ? $this->kongresse_to : 2100;
-		$typen = unserialize($this->kongresse->typ);
+		$typen = unserialize($this->kongresse_typ);
+
+		// SQL-String für die Veranstaltungstypen erstellen
+		$typen_sql = '';
+		foreach($typen as $typ)
+		{
+			if($typen_sql) $typen_sql .= ' OR ';
+			$typen_sql .= "typ = '".$typ."'";
+		}
 
 		// Datensätze laden
-		$objKongresse = \Database::getInstance()->prepare('SELECT * FROM tl_kongresse WHERE jahr >= ? AND jahr <= ? ORDER BY jahr DESC, datum_von DESC')
+		$objKongresse = \Database::getInstance()->prepare('SELECT * FROM tl_kongresse WHERE jahr >= ? AND jahr <= ? AND('.$typen_sql.') ORDER BY jahr DESC, datum_von DESC')
 		                                        ->execute($vonJahr, $bisJahr);
 
 		// Elo zuweisen
@@ -69,11 +77,11 @@ class Kongresse extends \Module
 				$link_protokoll = '';
 				if($objKongresse->file_broschuere)
 				{
-					$link_broschuere = '<a href="'.$this->replaceInsertTags('{{file::'.$objKongresse->file_broschuere.'}}').'" target="_blank"><img src="bundles/contaokongresse/images/buch.png" alt="Buch/Broschüre"></a>';
+					$link_broschuere = '<a href="'.$this->replaceInsertTags('{{file::'.$objKongresse->file_broschuere.'}}').'" target="_blank" title="Buch/Broschüre herunterladen"><img src="bundles/contaokongresse/images/buch_24.png" alt="Buch/Broschüre"></a>';
 				}
 				if($objKongresse->file_protokoll)
 				{
-					$link_protokoll = '<a href="'.$this->replaceInsertTags('{{file::'.$objKongresse->file_protokoll.'}}').'" target="_blank"><img src="bundles/contaokongresse/images/protokoll.png" alt="Protokoll"></a>';
+					$link_protokoll = '<a href="'.$this->replaceInsertTags('{{file::'.$objKongresse->file_protokoll.'}}').'" target="_blank" title="Protokoll herunterladen"><img src="bundles/contaokongresse/images/protokoll_24.png" alt="Protokoll"></a>';
 				}
 
 				// Extra-Links ermitteln
