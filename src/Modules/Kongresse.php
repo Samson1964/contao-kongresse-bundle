@@ -53,15 +53,33 @@ class Kongresse extends \Module
 		$typen = unserialize($this->kongresse_typ);
 
 		// SQL-String für die Veranstaltungstypen erstellen
-		$typen_sql = '';
-		foreach($typen as $typ)
+		if($this->kongresse_select)
 		{
-			if($typen_sql) $typen_sql .= ' OR ';
-			$typen_sql .= "typ = '".$typ."'";
+			// Bestimmte Veranstaltungen wurden ausgewählt
+			$typenArr = array();
+			foreach($typen as $typ)
+			{
+				$typenArr[] .= "typ = '".$typ."'";
+			}
+			if(count($typenArr) == 1)
+			{
+				$typen_sql = ' AND ';
+				$typen_sql .= implode(' OR ', $typenArr);
+			}
+			else
+			{
+				$typen_sql = ' AND (';
+				$typen_sql .= implode(' OR ', $typenArr);
+				$typen_sql .= ')';
+			}
 		}
-
+		else
+		{
+			$typen_sql = '';
+		}
+		
 		// Datensätze laden
-		$objKongresse = \Database::getInstance()->prepare('SELECT * FROM tl_kongresse WHERE jahr >= ? AND jahr <= ? AND('.$typen_sql.') ORDER BY jahr DESC, datum_von DESC')
+		$objKongresse = \Database::getInstance()->prepare('SELECT * FROM tl_kongresse WHERE jahr >= ? AND jahr <= ?'.$typen_sql.' ORDER BY jahr DESC, datum_von DESC')
 		                                        ->execute($vonJahr, $bisJahr);
 
 		// Elo zuweisen

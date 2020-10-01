@@ -1,5 +1,10 @@
 # Kongresse und Hauptausschüsse Changelog
 
+## Version 1.1.2 (2020-10-01)
+
+* Übersetzung BE-Modul repariert
+* Standard jetzt: alle Veranstaltungen im Frontend ausgeben, optional kann auch gefiltert werden
+
 ## Version 1.1.1 (2020-09-29)
 
 * Fix: application-Array wurde überschrieben
