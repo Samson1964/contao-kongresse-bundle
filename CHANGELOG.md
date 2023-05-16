@@ -1,5 +1,9 @@
 # Kongresse und Hauptausschüsse Changelog
 
+## Version 1.1.3 (2023-05-16)
+
+* Add: Ausgabe des Typs in das Template
+
 ## Version 1.1.2 (2020-10-01)
 
 * Übersetzung BE-Modul repariert

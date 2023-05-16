@@ -35,11 +35,3 @@ $GLOBALS['TL_LANG']['tl_kongresse']['extra_links_newWindow'] = array('Neues Fens
 
 $GLOBALS['TL_LANG']['tl_kongresse']['aktiv_legend'] = 'Veröffentlichung';
 $GLOBALS['TL_LANG']['tl_kongresse']['aktiv'] = array('Veröffentlicht', 'Datensatz veröffentlichen');
-
-$GLOBALS['TL_LANG']['tl_kongresse']['typen'] = array
-(
-	'oK' => 'Ordentlicher Kongress',
-	'aK' => 'Außerordentlicher Kongress',
-	'Ha' => 'Hauptausschuss',
-	'Ko' => 'Kommissionstagung'
-);

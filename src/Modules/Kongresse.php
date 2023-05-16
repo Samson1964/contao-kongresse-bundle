@@ -17,11 +17,6 @@ class Kongresse extends \Module
 
 	protected $strTemplate = 'mod_kongresse';
 
-	var $hash; // Variable für den Hashwert, um ein Brett eindeutig zuzuordnen
-	var $position;
-	var $halbzug;
-	var $brett;
-
 	/**
 	 * Display a wildcard in the back end
 	 * @return string
@@ -131,6 +126,8 @@ class Kongresse extends \Module
 				$records[] = array
 				(
 					'jahr'       => $jahr,
+					'typ'        => $objKongresse->typ,
+					'typTitle'   => $GLOBALS['TL_LANG']['tl_kongresse']['typen'][$objKongresse->typ],
 					'ort'        => $ort,
 					'datum'      => self::DatumVerschmelzen($objKongresse->datum_von, $objKongresse->datum_bis),
 					'info'       => $objKongresse->info,

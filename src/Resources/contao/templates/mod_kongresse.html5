@@ -6,6 +6,7 @@
 <table class="ce_table">
 	<tr>
 		<th class="jahr">Jahr</th>
+		<th class="typ">Typ</th>
 		<th class="ort">Ort</th>
 		<th class="datum">Datum</th>
 		<th class="info">Bemerkungen</th>
@@ -15,8 +16,9 @@
 	</tr>
 	<?php foreach($this->records as $item): ?>
 		<?php $class = $class == 'odd' ? 'even' : 'odd'; ?>
-		<tr class="<?= $class ?>">
+		<tr class="<?= $class ?> typ_<?= $item['typ'] ?>">
 			<td class="jahr"><?= $item['jahr'] ?></td>
+			<td class="typ" title="<?= $item['typTitle'] ?>"><?= $item['typ'] ?></td>
 			<td class="ort"><?= $item['ort'] ?></td>
 			<td class="datum"><?= $item['datum'] ?></td>
 			<td class="info"><?= $item['info'] ?></td>
