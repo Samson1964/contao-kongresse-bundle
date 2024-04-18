@@ -1,5 +1,11 @@
 # Kongresse und Hauptausschüsse Changelog
 
+## Version 1.2.0 (2024-04-18)
+
+* Add: codefog/contao-haste
+* Change: Haste-Toggler statt des normalen Togglers
+* Add: Kompatibilität PHP 8
+
 ## Version 1.1.3 (2023-05-16)
 
 * Add: Ausgabe des Typs in das Template
