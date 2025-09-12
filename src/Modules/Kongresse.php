@@ -72,7 +72,7 @@ class Kongresse extends \Module
 		{
 			$typen_sql = '';
 		}
-		
+
 		// Datensätze laden
 		$objKongresse = \Database::getInstance()->prepare('SELECT * FROM tl_kongresse WHERE jahr >= ? AND jahr <= ?'.$typen_sql.' ORDER BY jahr DESC, datum_von DESC')
 		                                        ->execute($vonJahr, $bisJahr);
@@ -88,11 +88,11 @@ class Kongresse extends \Module
 				$links = '';
 				$link_broschuere = '';
 				$link_protokoll = '';
-				if($objKongresse->file_broschuere)
+				if(isset($objKongresse->file_broschuere))
 				{
 					$link_broschuere = '<a href="'.$this->replaceInsertTags('{{file::'.$objKongresse->file_broschuere.'}}').'" target="_blank" title="Buch/Broschüre herunterladen"><img src="bundles/contaokongresse/images/buch_24.png" alt="Buch/Broschüre"></a>';
 				}
-				if($objKongresse->file_protokoll)
+				if(isset($objKongresse->file_protokoll))
 				{
 					$link_protokoll = '<a href="'.$this->replaceInsertTags('{{file::'.$objKongresse->file_protokoll.'}}').'" target="_blank" title="Protokoll herunterladen"><img src="bundles/contaokongresse/images/protokoll_24.png" alt="Protokoll"></a>';
 				}
@@ -109,7 +109,7 @@ class Kongresse extends \Module
 				}
 
 				// Jahr und Ort modifizieren
-				if($objKongresse->url)
+				if(isset($objKongresse->url))
 				{
 					$href = $this->replaceInsertTags($objKongresse->url);
 					$target = $objKongresse->newWindow ? ' target="_blank"' : '';
@@ -127,7 +127,7 @@ class Kongresse extends \Module
 				(
 					'jahr'       => $jahr,
 					'typ'        => $objKongresse->typ,
-					'typTitle'   => $GLOBALS['TL_LANG']['tl_kongresse']['typen'][$objKongresse->typ],
+					'typTitle'   => &$GLOBALS['TL_LANG']['tl_kongresse']['typen'][$objKongresse->typ],
 					'ort'        => $ort,
 					'datum'      => self::DatumVerschmelzen($objKongresse->datum_von, $objKongresse->datum_bis),
 					'info'       => $objKongresse->info,
@@ -146,55 +146,55 @@ class Kongresse extends \Module
 	function DatumVerschmelzen($von, $bis)
 	{
 		// Starttag und Endetag vergleichen
-		if($von && $bis) 
+		if($von && $bis)
 		{
-		  $start[0] = date("d",$von); // Starttag
-		  $start[1] = date("m",$von); // Startmonat
-		  $start[2] = date("Y",$von); // Startjahr
-		  $ende[0] = date("d",$bis); // Endetag
-		  $ende[1] = date("m",$bis); // Endemonat
-		  $ende[2] = date("Y",$bis); // Endejahr
-		  if($start[2] == $ende[2]) 
-		  {
-		    // gleiches Jahr
-		    $temp[0] = "";
-		    $temp[1] = $ende[2];
-		  }
-		  else
-		  {
-		    // unterschiedliches Jahr
-		    $temp[0] = $start[2];
-		    $temp[1] = $ende[2];
-		  }
-		  if($start[1] == $ende[1]) 
-		  {
-		    // gleicher Monat
-		    $temp[1] = $ende[1].".".$temp[1];
-		  }
-		  else
-		  {
-		    // unterschiedlicher Monat
-		    $temp[0] = $start[1].".".$temp[0];
-		    $temp[1] = $ende[1].".".$temp[1];
-		  }
-		  if($start[0] == $ende[0]) 
-		  {
-		    // gleicher Tag
-		    $temp[1] = $ende[0].".".$temp[1];
-		  }
-		  else
-		  {
-		    // unterschiedlicher Tag
-		    $temp[0] = $start[0].".".$temp[0];
-		    $temp[1] = $ende[0].".".$temp[1];
-		  }
-		  $anzeigetag = $temp[0]." - ".$temp[1];
+			$start[0] = date("d",$von); // Starttag
+			$start[1] = date("m",$von); // Startmonat
+			$start[2] = date("Y",$von); // Startjahr
+			$ende[0] = date("d",$bis); // Endetag
+			$ende[1] = date("m",$bis); // Endemonat
+			$ende[2] = date("Y",$bis); // Endejahr
+			if($start[2] == $ende[2])
+			{
+				// gleiches Jahr
+				$temp[0] = "";
+				$temp[1] = $ende[2];
+			}
+			else
+			{
+				// unterschiedliches Jahr
+				$temp[0] = $start[2];
+				$temp[1] = $ende[2];
+			}
+			if($start[1] == $ende[1])
+			{
+				// gleicher Monat
+				$temp[1] = $ende[1].".".$temp[1];
+			}
+			else
+			{
+				// unterschiedlicher Monat
+				$temp[0] = $start[1].".".$temp[0];
+				$temp[1] = $ende[1].".".$temp[1];
+			}
+			if($start[0] == $ende[0])
+			{
+				// gleicher Tag
+				$temp[1] = $ende[0].".".$temp[1];
+			}
+			else
+			{
+				// unterschiedlicher Tag
+				$temp[0] = $start[0].".".$temp[0];
+				$temp[1] = $ende[0].".".$temp[1];
+			}
+			$anzeigetag = $temp[0]." - ".$temp[1];
 		}
 		elseif($von && !$bis)
 		{
-		  // Endetag ist nicht gesetzt
-		  $anzeigetag = date("d.m.Y",$von);
-		}    
+			// Endetag ist nicht gesetzt
+			$anzeigetag = date("d.m.Y",$von);
+		}
 		else $anzeigetag = '';
 		return $anzeigetag;
 	}

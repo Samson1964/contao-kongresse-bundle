@@ -15,7 +15,7 @@
 		<th class="links">Links</th>
 	</tr>
 	<?php foreach($this->records as $item): ?>
-		<?php $class = $class == 'odd' ? 'even' : 'odd'; ?>
+		<?php $class = isset($class) == 'odd' ? 'even' : 'odd'; ?>
 		<tr class="<?= $class ?> typ_<?= $item['typ'] ?>">
 			<td class="jahr"><?= $item['jahr'] ?></td>
 			<td class="typ" title="<?= $item['typTitle'] ?>"><?= $item['typ'] ?></td>

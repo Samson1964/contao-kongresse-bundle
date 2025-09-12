@@ -27,13 +27,13 @@ $GLOBALS['TL_DCA']['tl_kongresse'] = array
 		'sorting' => array
 		(
 			'mode'                    => 2,
-			'fields'                  => array('jahr'),
+			'fields'                  => array('datum_von', 'jahr'),
 			'flag'                    => 12,
 			'panelLayout'             => 'filter;sort,search,limit',
 		),
 		'label' => array
 		(
-			'fields'                  => array('jahr','ort','datum_von','datum_bis','typ'),
+			'fields'                  => array('jahr','ort','datum_von','datum_bis','typ','online'),
 			'showColumns'             => true,
 			'format'                  => '%s',
 		),
@@ -95,7 +95,7 @@ $GLOBALS['TL_DCA']['tl_kongresse'] = array
 	// Paletten
 	'palettes' => array
 	(
-		'default'                     => '{congress_legend},typ,jahr,ort,datum_von,datum_bis,info;{files_legend},file_broschuere,file_protokoll,url,newWindow;{extra_legend},extra_links;{aktiv_legend},aktiv'
+		'default'                     => '{congress_legend},typ,online,jahr,ort,datum_von,datum_bis,info;{files_legend},file_broschuere,file_protokoll,url,newWindow;{extra_legend},extra_links;{aktiv_legend},aktiv'
 	),
 
 	// Felder
@@ -127,6 +127,21 @@ $GLOBALS['TL_DCA']['tl_kongresse'] = array
 			),
 			'sql'                     => "varchar(2) NOT NULL default ''"
 		),
+		'online' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_kongresse']['online'],
+			'exclude'                 => true,
+			'filter'                  => true,
+			'default'                 => false,
+			'inputType'               => 'checkbox',
+			'eval'                    => array
+			(
+				'mandatory'           => false,
+				'tl_class'            => 'w50 m12',
+				'isBoolean'           => true,
+			),
+			'sql'                     => "char(1) NOT NULL default ''"
+		),
 		'jahr' => array
 		(
 			'label'                   => &$GLOBALS['TL_LANG']['tl_kongresse']['jahr'],
@@ -155,7 +170,7 @@ $GLOBALS['TL_DCA']['tl_kongresse'] = array
 			'label'                   => &$GLOBALS['TL_LANG']['tl_kongresse']['datum_von'],
 			'exclude'                 => true,
 			'inputType'               => 'text',
-			'flag'                    => 5,
+			'flag'                    => 6,
 			'eval'                    => array('rgxp'=>'date', 'datepicker'=>true, 'tl_class'=>'w50 wizard clr'),
 			'sql'                     => "varchar(11) NOT NULL default ''"
 		),
@@ -164,7 +179,7 @@ $GLOBALS['TL_DCA']['tl_kongresse'] = array
 			'label'                   => &$GLOBALS['TL_LANG']['tl_kongresse']['datum_bis'],
 			'exclude'                 => true,
 			'inputType'               => 'text',
-			'flag'                    => 5,
+			'flag'                    => 6,
 			'eval'                    => array('rgxp'=>'date', 'datepicker'=>true, 'tl_class'=>'w50 wizard'),
 			'sql'                     => "varchar(11) NOT NULL default ''"
 		),
@@ -235,7 +250,7 @@ $GLOBALS['TL_DCA']['tl_kongresse'] = array
 			'eval'                    => array
 			(
 				'mandatory'           => false,
-				'tl_class'            => 'w50',
+				'tl_class'            => 'w50 m12',
 				'isBoolean'           => true,
 			),
 			'sql'                     => "char(1) NOT NULL default ''"

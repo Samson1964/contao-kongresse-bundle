@@ -15,6 +15,7 @@ $GLOBALS['TL_LANG']['tl_kongresse']['show'] = array('Veranstaltungsdetails anzei
  */
 $GLOBALS['TL_LANG']['tl_kongresse']['congress_legend'] = 'Veranstaltung';
 $GLOBALS['TL_LANG']['tl_kongresse']['typ'] = array('Art', 'Art der Veranstaltung');
+$GLOBALS['TL_LANG']['tl_kongresse']['online'] = array('Online', 'Online-Veranstaltung');
 $GLOBALS['TL_LANG']['tl_kongresse']['jahr'] = array('Jahr', 'Jahr der Veranstaltung');
 $GLOBALS['TL_LANG']['tl_kongresse']['ort'] = array('Ort', 'Ort der Veranstaltung');
 $GLOBALS['TL_LANG']['tl_kongresse']['datum_von'] = array('Von Datum', 'Von-Datum im Format TT.MM.JJJJ oder leerlassen');

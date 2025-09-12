@@ -1,7 +1,6 @@
 # ToDo
 
 * Datensatzliste: Sprachvariablen und Filter ändern
-* Datensatzliste: Sortierung nach Jahr und Datum
 * FE-Modul: Typ-Auswahl einbauen in der Klasse
 * FE-Modul: Ausgabe von undefinierten Veranstaltungen
 * Template-Ausgabe: Art der Veranstaltung kennzeichnen

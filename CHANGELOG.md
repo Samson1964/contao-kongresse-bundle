@@ -1,5 +1,13 @@
 # Kongresse und Hauptausschüsse Changelog
 
+## Version 1.2.1 (2025-09-12)
+
+* Fix: Warning: Undefined array key \"\" at src/Modules/Kongresse.php:130
+* Fix: Warning: Undefined variable $class at src/Resources/contao/templates/mod_kongresse.html5:18
+* Fix: Unknown insert tag flag "PåIB Ú" in {{file::„¯€¿æ’|PåIB Ú}} 
+* Add: tl_kongresse.online -> Checkbox Online-Veranstaltung
+* Change: Ticket "Kongresse & Ausschüsse: Nach Datum sortieren" (ToDo Datensatzliste: Sortierung nach Jahr und Datum)
+
 ## Version 1.2.0 (2024-04-18)
 
 * Add: codefog/contao-haste
