@@ -2,14 +2,21 @@
 
 /**
  * Tabelle tl_kongresse
+ *
+ * Die Lesezugriffe auf $GLOBALS['TL_LANG'] sind mit `?? null` abgesichert,
+ * weil der DcaLoader die Sprachdateien noch nicht geladen hat, wenn die DCA
+ * beispielsweise über contao:migrate eingelesen wird.
  */
+
+use Contao\DC_Table;
+
 $GLOBALS['TL_DCA']['tl_kongresse'] = array
 (
 
 	// Konfiguration
 	'config' => array
 	(
-		'dataContainer'               => 'Table',
+		'dataContainer'               => DC_Table::class,
 		'enableVersioning'            => true,
 		'sql' => array
 		(
@@ -33,7 +40,7 @@ $GLOBALS['TL_DCA']['tl_kongresse'] = array
 		),
 		'label' => array
 		(
-			'fields'                  => array('jahr','ort','datum_von','datum_bis','typ','online'),
+			'fields'                  => array('jahr', 'ort', 'datum_von', 'datum_bis', 'typ', 'online'),
 			'showColumns'             => true,
 			'format'                  => '%s',
 		),
@@ -41,7 +48,6 @@ $GLOBALS['TL_DCA']['tl_kongresse'] = array
 		(
 			'all' => array
 			(
-				'label'               => &$GLOBALS['TL_LANG']['MSC']['all'],
 				'href'                => 'act=select',
 				'class'               => 'header_edit_all',
 				'attributes'          => 'onclick="Backend.getScrollOffset()" accesskey="e"'
@@ -51,43 +57,32 @@ $GLOBALS['TL_DCA']['tl_kongresse'] = array
 		(
 			'edit' => array
 			(
-				'label'               => &$GLOBALS['TL_LANG']['tl_kongresse']['edit'],
 				'href'                => 'act=edit',
-				'icon'                => 'edit.gif'
+				'icon'                => 'edit.svg'
 			),
 			'copy' => array
 			(
-				'label'               => &$GLOBALS['TL_LANG']['tl_kongresse']['copy'],
 				'href'                => 'act=copy',
-				'icon'                => 'copy.gif',
+				'icon'                => 'copy.svg',
 			),
 			'delete' => array
 			(
-				'label'               => &$GLOBALS['TL_LANG']['tl_kongresse']['delete'],
 				'href'                => 'act=delete',
-				'icon'                => 'delete.gif',
+				'icon'                => 'delete.svg',
 				'attributes'          => 'onclick="if(!confirm(\'' . ($GLOBALS['TL_LANG']['MSC']['deleteConfirm'] ?? null) . '\'))return false;Backend.getScrollOffset()"'
+			),
+			// Ein-/Ausblenden über den Contao-eigenen Toggler; dafür ist am Feld
+			// "aktiv" zusätzlich 'toggle' => true gesetzt.
+			'toggle' => array
+			(
+				'href'                => 'act=toggle&amp;field=aktiv',
+				'icon'                => 'visible.svg'
 			),
 			'show' => array
 			(
-				'label'               => &$GLOBALS['TL_LANG']['tl_kongresse']['show'],
 				'href'                => 'act=show',
-				'icon'                => 'show.gif',
+				'icon'                => 'show.svg',
 				'attributes'          => 'style="margin-right:3px"'
-			),
-			'toggle' => array
-			(
-				'label'                => &$GLOBALS['TL_LANG']['tl_kongresse']['toggle'],
-				'attributes'           => 'onclick="Backend.getScrollOffset()"',
-				'haste_ajax_operation' => array
-				(
-					'field'            => 'aktiv',
-					'options'          => array
-					(
-						array('value' => '', 'icon' => 'invisible.svg'),
-						array('value' => '1', 'icon' => 'visible.svg'),
-					),
-				),
 			),
 		)
 	),
@@ -117,6 +112,7 @@ $GLOBALS['TL_DCA']['tl_kongresse'] = array
 		(
 			'label'                   => &$GLOBALS['TL_LANG']['tl_kongresse']['typ'],
 			'exclude'                 => true,
+			'filter'                  => true,
 			'inputType'               => 'select',
 			'options'                 => &$GLOBALS['TL_LANG']['tl_kongresse']['typen'],
 			'eval'                    => array
@@ -318,23 +314,19 @@ $GLOBALS['TL_DCA']['tl_kongresse'] = array
 			),
 			'sql'                     => "blob NULL"
 		),
+		// Der Vorgabewert '1' dient zugleich als Merkmal für die Migration
+		// AktivDefaultMigration, die beim Update auf 2.0.0 die vorhandenen
+		// Datensätze einmalig veröffentlicht.
 		'aktiv' => array
 		(
 			'label'                   => &$GLOBALS['TL_LANG']['tl_kongresse']['aktiv'],
 			'exclude'                 => true,
 			'filter'                  => true,
-			'default'                 => true,
+			'default'                 => '1',
 			'inputType'               => 'checkbox',
-			'eval'                    => array('doNotCopy'=>true),
-			'sql'                     => "char(1) NOT NULL default ''"
+			'toggle'                  => true,
+			'eval'                    => array('doNotCopy'=>true, 'isBoolean'=>true),
+			'sql'                     => "char(1) NOT NULL default '1'"
 		),
 	)
 );
-
-/**
- * Class tl_member_aktivicon
- */
-class tl_kongresse extends Backend
-{
-
-}

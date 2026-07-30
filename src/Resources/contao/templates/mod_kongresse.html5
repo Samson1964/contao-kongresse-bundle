@@ -2,7 +2,7 @@
 
 <?php $this->block('content'); ?>
 
-<?php if($this->records): ?>
+<?php if ($this->records): ?>
 <table class="ce_table">
 	<tr>
 		<th class="jahr">Jahr</th>
@@ -14,14 +14,15 @@
 		<th class="protokoll" title="Protokoll">P</th>
 		<th class="links">Links</th>
 	</tr>
-	<?php foreach($this->records as $item): ?>
-		<?php $class = isset($class) == 'odd' ? 'even' : 'odd'; ?>
-		<tr class="<?= $class ?> typ_<?= $item['typ'] ?>">
+	<?php $i = 0; ?>
+	<?php foreach ($this->records as $item): ?>
+		<?php $class = (++$i % 2) ? 'odd' : 'even'; ?>
+		<tr class="<?= $class ?> typ_<?= Contao\StringUtil::specialchars($item['typ']) ?><?= $item['online'] ? ' online' : '' ?>">
 			<td class="jahr"><?= $item['jahr'] ?></td>
-			<td class="typ" title="<?= $item['typTitle'] ?>"><?= $item['typ'] ?></td>
+			<td class="typ" title="<?= Contao\StringUtil::specialchars($item['typTitle']) ?>"><?= Contao\StringUtil::specialchars($item['typ']) ?></td>
 			<td class="ort"><?= $item['ort'] ?></td>
 			<td class="datum"><?= $item['datum'] ?></td>
-			<td class="info"><?= $item['info'] ?></td>
+			<td class="info"><?= Contao\StringUtil::specialchars($item['info']) ?></td>
 			<td class="buch"><?= $item['broschuere'] ?></td>
 			<td class="protokoll"><?= $item['protokoll'] ?></td>
 			<td class="links"><?= $item['links'] ?></td>

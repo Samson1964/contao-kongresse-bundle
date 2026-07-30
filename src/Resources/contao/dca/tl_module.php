@@ -1,19 +1,16 @@
 <?php
-/**
- * Avatar for Contao Open Source CMS
- *
- * Copyright (C) 2013 Kirsten Roschanski
- * Copyright (C) 2013 Tristan Lins <http://bit3.de>
- *
- * @package    Avatar
- * @license    http://opensource.org/licenses/lgpl-3.0.html LGPL
- */
 
 /**
- * Add palette to tl_module
+ * Erweiterung von tl_module um die Einstellungen des Frontend-Moduls
+ * "Kongresse & Ausschüsse".
+ *
+ * Die Felder align und space aus der ursprünglichen Palette sind entfallen,
+ * weil es sie seit Contao 4 nicht mehr gibt. Stattdessen stehen jetzt die
+ * üblichen Felder headline und customTpl zur Verfügung.
  */
+
 $GLOBALS['TL_DCA']['tl_module']['palettes']['__selector__'][] = 'kongresse_select';
-$GLOBALS['TL_DCA']['tl_module']['palettes']['kongresse'] = '{title_legend},name,type;{kongresse_legend},kongresse_from,kongresse_to,kongresse_select;{expert_legend:hide},cssID,align,space';
+$GLOBALS['TL_DCA']['tl_module']['palettes']['kongresse'] = '{title_legend},name,headline,type;{kongresse_legend},kongresse_from,kongresse_to,kongresse_select;{template_legend:hide},customTpl;{expert_legend:hide},cssID';
 $GLOBALS['TL_DCA']['tl_module']['subpalettes']['kongresse_select'] = 'kongresse_typ';
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['kongresse_from'] = array
@@ -44,15 +41,15 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['kongresse_typ'] = array
 	'eval'                    => array
 	(
 		'mandatory'           => false,
-		'includeBlankOption'  => true,
 		'multiple'            => true,
 		'tl_class'            => 'long clr'
 	),
-	'sql'                     => 'blob NULL' 
-); 
+	'sql'                     => 'blob NULL'
+);
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['kongresse_select'] = array
 (
+	'label'                   => &$GLOBALS['TL_LANG']['tl_module']['kongresse_select'],
 	'exclude'                 => true,
 	'filter'                  => true,
 	'default'                 => false,
@@ -60,8 +57,8 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['kongresse_select'] = array
 	'eval'                    => array
 	(
 		'submitOnChange'      => true,
+		'isBoolean'           => true,
 		'tl_class'            => 'clr'
 	),
 	'sql'                     => "char(1) NOT NULL default ''"
 );
-

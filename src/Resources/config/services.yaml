@@ -1,0 +1,19 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    _instanceof:
+        Contao\CoreBundle\Framework\FrameworkAwareInterface:
+            calls:
+                - [setFramework, ['@contao.framework']]
+
+    # Die Migration wird über autoconfigure automatisch mit contao.migration
+    # getaggt und läuft damit bei contao:migrate mit.
+    Schachbulle\ContaoKongresseBundle\Migration\:
+        resource: '../../Migration'
+
+    # Das Frontend-Modul wird als klassisches Contao-Modul über
+    # $GLOBALS['FE_MOD'] eingebunden, das in Contao 4.13 wie in Contao 5
+    # unterstützt wird, und braucht deshalb keinen Service.
