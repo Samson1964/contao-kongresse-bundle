@@ -1,0 +1,13 @@
+# Quelle fuer die Metadaten im Contao Manager (contao/package-metadata).
+# Aenderungen hier werden von Claude in den Fork uebertragen.
+# Der englische Block wird beim Abgleich ergaenzt, falls er fehlt.
+
+de:
+    title: Kongresse und Hauptausschüsse
+    description: >
+        Verwaltet Kongresse, Hauptausschüsse und Kommissionstagungen mit Tagesordnungen, Anträgen und Unterlagen und gibt sie im Frontend aus.
+    keywords:
+        - Kongress
+        - Hauptausschuss
+        - Tagung
+        - Veranstaltung
